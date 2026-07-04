@@ -32,6 +32,8 @@ task.wait(0.2)
 local ScreenGui = Instance.new("ScreenGui")
 local MainFrame = Instance.new("Frame")
 local Title = Instance.new("TextLabel")
+local MinimizeBtn = Instance.new("TextButton")
+local OpenBtn = Instance.new("TextButton")
 local ToggleEggBtn = Instance.new("TextButton")
 local ToggleDepositBtn = Instance.new("TextButton")
 local ToggleChickenBtn = Instance.new("TextButton")
@@ -58,9 +60,29 @@ Title.Parent = MainFrame
 Title.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 Title.Size = UDim2.new(1, 0, 0, 40)
 Title.Font = Enum.Font.SourceSansBold
-Title.Text = "MANUAL CONTROL HUB 🕹️"
+Title.Text = "iHannsyHUB - Pre release"
 Title.TextColor3 = Color3.fromRGB(255, 255, 255)
 Title.TextSize = 16
+
+MinimizeBtn.Parent = Title
+MinimizeBtn.BackgroundColor3 = Color3.fromRGB(231, 76, 60)
+MinimizeBtn.Position = UDim2.new(1, -35, 0, 5)
+MinimizeBtn.Size = UDim2.new(0, 30, 0, 30)
+MinimizeBtn.Font = Enum.Font.SourceSansBold
+MinimizeBtn.Text = "-"
+MinimizeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+MinimizeBtn.TextSize = 20
+
+OpenBtn.Name = "OpenHubBtn"
+OpenBtn.Parent = ScreenGui
+OpenBtn.BackgroundColor3 = Color3.fromRGB(46, 204, 113)
+OpenBtn.Position = UDim2.new(0.02, 0, 0.15, 0)
+OpenBtn.Size = UDim2.new(0, 80, 0, 30)
+OpenBtn.Font = Enum.Font.SourceSansBold
+OpenBtn.Text = "OPEN HUB"
+OpenBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+OpenBtn.TextSize = 12
+OpenBtn.Visible = false
 
 ToggleEggBtn.Parent = MainFrame
 ToggleEggBtn.BackgroundColor3 = Color3.fromRGB(231, 76, 60)
@@ -203,7 +225,7 @@ end
 
 task.spawn(function()
     while true do
-        task.wait(0.2)
+        task.wait(0.1)
         if _G.AutoEggPasti then
             for _, telur in pairs(FolderEggs:GetChildren()) do
                 if telur and _G.AutoEggPasti then
@@ -217,7 +239,7 @@ end)
 
 task.spawn(function()
     while true do
-        task.wait(5)
+        task.wait(0.1)
         if _G.AutoDeposit then
             pcall(function()
                 StandardRemoteFunc:InvokeServer("Deposit Eggs")
@@ -228,7 +250,7 @@ end)
 
 task.spawn(function()
     while true do
-        task.wait(2)
+        task.wait(0.1)
         if _G.AutoBuyChicken then
             pcall(function()
                 StandardRemoteFunc:InvokeServer("Buy Chickens", _G.ChickenAmount)
@@ -239,7 +261,7 @@ end)
 
 task.spawn(function()
     while true do
-        task.wait(1)
+        task.wait(0.1)
         if _G.AutoCollectCash then
             pcall(function()
                 StandardRemoteFunc:InvokeServer("Collect Cash")
@@ -250,7 +272,7 @@ end)
 
 task.spawn(function()
     while true do
-        task.wait(2.5)
+        task.wait(0.1)
         if _G.AutoMergeChicken then
             pcall(function()
                 if not MergeRemote then
@@ -264,7 +286,7 @@ end)
 
 task.spawn(function()
     while true do
-        task.wait(3)
+        task.wait(0.1)
         if _G.AutoUpgradeProcess then
             pcall(function()
                 StandardRemoteFunc:InvokeServer("Upgrade Process Level")
@@ -329,4 +351,14 @@ ToggleGuildBtn.MouseButton1Click:Connect(function()
         Text = _G.AutoClaimGuild and "Auto Claim Guild Dinyalakan" or "Auto Claim Guild Dimatikan",
         Duration = 1.5
     })
+end)
+
+MinimizeBtn.MouseButton1Click:Connect(function()
+    MainFrame.Visible = false
+    OpenBtn.Visible = true
+end)
+
+OpenBtn.MouseButton1Click:Connect(function()
+    MainFrame.Visible = true
+    OpenBtn.Visible = false
 end)
