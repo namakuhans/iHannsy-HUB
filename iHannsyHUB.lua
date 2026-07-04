@@ -24,6 +24,7 @@ _G.AutoBuyChicken = false
 _G.AutoCollectCash = false
 _G.AutoMergeChicken = false
 _G.AutoUpgradeProcess = false
+_G.AutoClaimGuild = false
 _G.ChickenAmount = 1 
 
 task.wait(0.2)
@@ -37,6 +38,7 @@ local ToggleChickenBtn = Instance.new("TextButton")
 local ToggleCashBtn = Instance.new("TextButton")
 local ToggleMergeBtn = Instance.new("TextButton")
 local ToggleUpgradeBtn = Instance.new("TextButton")
+local ToggleGuildBtn = Instance.new("TextButton")
 local DropdownBtn = Instance.new("TextButton")
 local DropdownFrame = Instance.new("Frame")
 local Credit = Instance.new("TextLabel")
@@ -48,7 +50,7 @@ MainFrame.Name = "ManualControlUltimateHub"
 MainFrame.Parent = ScreenGui
 MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 MainFrame.Position = UDim2.new(0.1, 0, 0.15, 0)
-MainFrame.Size = UDim2.new(0, 240, 0, 430)
+MainFrame.Size = UDim2.new(0, 240, 0, 470)
 MainFrame.Active = true
 MainFrame.Draggable = true
 
@@ -71,7 +73,7 @@ ToggleEggBtn.TextSize = 12
 
 ToggleDepositBtn.Parent = MainFrame
 ToggleDepositBtn.BackgroundColor3 = Color3.fromRGB(231, 76, 60)
-ToggleDepositBtn.Position = UDim2.new(0.05, 0, 0.20, 0)
+ToggleDepositBtn.Position = UDim2.new(0.05, 0, 0.19, 0)
 ToggleDepositBtn.Size = UDim2.new(0.9, 0, 0, 30)
 ToggleDepositBtn.Font = Enum.Font.SourceSansBold
 ToggleDepositBtn.Text = "AUTO DEPOSIT: OFF"
@@ -80,7 +82,7 @@ ToggleDepositBtn.TextSize = 12
 
 ToggleChickenBtn.Parent = MainFrame
 ToggleChickenBtn.BackgroundColor3 = Color3.fromRGB(231, 76, 60)
-ToggleChickenBtn.Position = UDim2.new(0.05, 0, 0.29, 0)
+ToggleChickenBtn.Position = UDim2.new(0.05, 0, 0.27, 0)
 ToggleChickenBtn.Size = UDim2.new(0.9, 0, 0, 30)
 ToggleChickenBtn.Font = Enum.Font.SourceSansBold
 ToggleChickenBtn.Text = "AUTO CHICKEN: OFF"
@@ -89,7 +91,7 @@ ToggleChickenBtn.TextSize = 12
 
 ToggleCashBtn.Parent = MainFrame
 ToggleCashBtn.BackgroundColor3 = Color3.fromRGB(231, 76, 60)
-ToggleCashBtn.Position = UDim2.new(0.05, 0, 0.38, 0)
+ToggleCashBtn.Position = UDim2.new(0.05, 0, 0.35, 0)
 ToggleCashBtn.Size = UDim2.new(0.9, 0, 0, 30)
 ToggleCashBtn.Font = Enum.Font.SourceSansBold
 ToggleCashBtn.Text = "AUTO CASH: OFF"
@@ -98,7 +100,7 @@ ToggleCashBtn.TextSize = 12
 
 ToggleMergeBtn.Parent = MainFrame
 ToggleMergeBtn.BackgroundColor3 = Color3.fromRGB(231, 76, 60)
-ToggleMergeBtn.Position = UDim2.new(0.05, 0, 0.47, 0)
+ToggleMergeBtn.Position = UDim2.new(0.05, 0, 0.43, 0)
 ToggleMergeBtn.Size = UDim2.new(0.9, 0, 0, 30)
 ToggleMergeBtn.Font = Enum.Font.SourceSansBold
 ToggleMergeBtn.Text = "AUTO MERGE: OFF"
@@ -107,16 +109,25 @@ ToggleMergeBtn.TextSize = 12
 
 ToggleUpgradeBtn.Parent = MainFrame
 ToggleUpgradeBtn.BackgroundColor3 = Color3.fromRGB(231, 76, 60)
-ToggleUpgradeBtn.Position = UDim2.new(0.05, 0, 0.56, 0)
+ToggleUpgradeBtn.Position = UDim2.new(0.05, 0, 0.51, 0)
 ToggleUpgradeBtn.Size = UDim2.new(0.9, 0, 0, 30)
 ToggleUpgradeBtn.Font = Enum.Font.SourceSansBold
 ToggleUpgradeBtn.Text = "AUTO UPGRADE PROCESS: OFF"
 ToggleUpgradeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 ToggleUpgradeBtn.TextSize = 12
 
+ToggleGuildBtn.Parent = MainFrame
+ToggleGuildBtn.BackgroundColor3 = Color3.fromRGB(231, 76, 60)
+ToggleGuildBtn.Position = UDim2.new(0.05, 0, 0.59, 0)
+ToggleGuildBtn.Size = UDim2.new(0.9, 0, 0, 30)
+ToggleGuildBtn.Font = Enum.Font.SourceSansBold
+ToggleGuildBtn.Text = "AUTO CLAIM GUILD: OFF"
+ToggleGuildBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleGuildBtn.TextSize = 12
+
 DropdownBtn.Parent = MainFrame
 DropdownBtn.BackgroundColor3 = Color3.fromRGB(45, 52, 54)
-DropdownBtn.Position = UDim2.new(0.05, 0, 0.68, 0)
+DropdownBtn.Position = UDim2.new(0.05, 0, 0.72, 0)
 DropdownBtn.Size = UDim2.new(0.9, 0, 0, 30)
 DropdownBtn.Font = Enum.Font.SourceSansBold
 DropdownBtn.Text = "JUMLAH BELI AYAM: 1 ▼"
@@ -125,7 +136,7 @@ DropdownBtn.TextSize = 12
 
 DropdownFrame.Parent = MainFrame
 DropdownFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-DropdownFrame.Position = UDim2.new(0.05, 0, 0.76, 0)
+DropdownFrame.Position = UDim2.new(0.05, 0, 0.80, 0)
 DropdownFrame.Size = UDim2.new(0.9, 0, 0, 35)
 DropdownFrame.Visible = false
 DropdownFrame.ZIndex = 5
@@ -185,6 +196,9 @@ local function updateUI()
 
     ToggleUpgradeBtn.Text = _G.AutoUpgradeProcess and "AUTO UPGRADE PROCESS: ACTIVE" or "AUTO UPGRADE PROCESS: OFF"
     ToggleUpgradeBtn.BackgroundColor3 = _G.AutoUpgradeProcess and Color3.fromRGB(46, 204, 113) or Color3.fromRGB(231, 76, 60)
+
+    ToggleGuildBtn.Text = _G.AutoClaimGuild and "AUTO CLAIM GUILD: ACTIVE" or "AUTO CLAIM GUILD: OFF"
+    ToggleGuildBtn.BackgroundColor3 = _G.AutoClaimGuild and Color3.fromRGB(46, 204, 113) or Color3.fromRGB(231, 76, 60)
 end
 
 task.spawn(function()
@@ -259,6 +273,17 @@ task.spawn(function()
     end
 end)
 
+task.spawn(function()
+    while true do
+        if _G.AutoClaimGuild then
+            pcall(function()
+                StandardRemoteFunc:InvokeServer("Claim Group Reward")
+            end)
+        end
+        task.wait(600)
+    end
+end)
+
 ToggleEggBtn.MouseButton1Click:Connect(function()
     _G.AutoEggPasti = not _G.AutoEggPasti
     updateUI()
@@ -291,6 +316,17 @@ ToggleUpgradeBtn.MouseButton1Click:Connect(function()
     game:GetService("StarterGui"):SetCore("SendNotification", {
         Title = "Egg Hub",
         Text = _G.AutoUpgradeProcess and "Auto Upgrade Process Dinyalakan" or "Auto Upgrade Process Dimatikan",
+        Duration = 1.5
+    })
+end)
+
+ToggleGuildBtn.MouseButton1Click:Connect(function()
+    _G.AutoClaimGuild = not _G.AutoClaimGuild
+    updateUI()
+
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+        Title = "Egg Hub",
+        Text = _G.AutoClaimGuild and "Auto Claim Guild Dinyalakan" or "Auto Claim Guild Dimatikan",
         Duration = 1.5
     })
 end)
