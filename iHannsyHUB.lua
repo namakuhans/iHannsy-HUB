@@ -1,6 +1,7 @@
+local CollectRemote = game:GetService("ReplicatedStorage").Paper.Remotes.__remoteevent
+local FolderEggs = workspace:WaitForChild("Eggs")
+local LocalPlayer = game:GetService("Players").LocalPlayer
 
-
-local CollectRemote = game:GetService("ReplicatedStorage").Paper.Remotes.__remoteeventlocal FolderEggs = workspace:WaitForChild("Eggs")local LocalPlayer = game:GetService("Players").LocalPlayer
 local function GetNilRemote(Name, DebugId)
     for _, Object in getnilinstances() do
         if Object.Name == Name and Object:GetDebugId() == DebugId then
@@ -11,8 +12,11 @@ local function GetNilRemote(Name, DebugId)
         if Object.Name == Name and Object:IsA("RemoteFunction") then
             return Object
         end
-    endend
-local StandardRemoteFunc = game:GetService("ReplicatedStorage").Paper.Remotes.__remotefunctionlocal MergeRemote = GetNilRemote("__remotefunction", "1_18021")
+    end
+end
+
+local StandardRemoteFunc = game:GetService("ReplicatedStorage").Paper.Remotes.__remotefunction
+local MergeRemote = GetNilRemote("__remotefunction", "1_18021")
 
 _G.AutoEggPasti = false
 _G.AutoDeposit = false
@@ -21,8 +25,21 @@ _G.AutoCollectCash = false
 _G.AutoMergeChicken = false
 _G.AutoUpgradeProcess = false
 _G.ChickenAmount = 1 
+
 task.wait(0.2)
-local ScreenGui = Instance.new("ScreenGui")local MainFrame = Instance.new("Frame")local Title = Instance.new("TextLabel")local ToggleEggBtn = Instance.new("TextButton")local ToggleDepositBtn = Instance.new("TextButton")local ToggleChickenBtn = Instance.new("TextButton")local ToggleCashBtn = Instance.new("TextButton")local ToggleMergeBtn = Instance.new("TextButton")local ToggleUpgradeBtn = Instance.new("TextButton")local DropdownBtn = Instance.new("TextButton")local DropdownFrame = Instance.new("Frame")local Credit = Instance.new("TextLabel")
+
+local ScreenGui = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local Title = Instance.new("TextLabel")
+local ToggleEggBtn = Instance.new("TextButton")
+local ToggleDepositBtn = Instance.new("TextButton")
+local ToggleChickenBtn = Instance.new("TextButton")
+local ToggleCashBtn = Instance.new("TextButton")
+local ToggleMergeBtn = Instance.new("TextButton")
+local ToggleUpgradeBtn = Instance.new("TextButton")
+local DropdownBtn = Instance.new("TextButton")
+local DropdownFrame = Instance.new("Frame")
+local Credit = Instance.new("TextLabel")
 
 ScreenGui.Parent = game:GetService("CoreGui")
 ScreenGui.ResetOnSpawn = false
@@ -121,10 +138,13 @@ Credit.Font = Enum.Font.SourceSansItalic
 Credit.Text = "Full Script Hub Rewritten"
 Credit.TextColor3 = Color3.fromRGB(130, 130, 130)
 Credit.TextSize = 11
-local options = {1, 5, 25, 100}local listLayout = Instance.new("UIListLayout")
+
+local options = {1, 5, 25, 100}
+local listLayout = Instance.new("UIListLayout")
 listLayout.Parent = DropdownFrame
 listLayout.FillDirection = Enum.FillDirection.Horizontal
 listLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
 for i, val in ipairs(options) do
     local optBtn = Instance.new("TextButton")
     optBtn.Parent = DropdownFrame
@@ -140,10 +160,13 @@ for i, val in ipairs(options) do
         _G.ChickenAmount = val
         DropdownBtn.Text = "JUMLAH BELI AYAM: " .. tostring(val) .. " ▼"
         DropdownFrame.Visible = false
-    end)end
+    end)
+end
 
 DropdownBtn.MouseButton1Click:Connect(function()
-    DropdownFrame.Visible = not DropdownFrame.Visibleend)
+    DropdownFrame.Visible = not DropdownFrame.Visible
+end)
+
 local function updateUI()
     ToggleEggBtn.Text = _G.AutoEggPasti and "AUTO EGG: ACTIVE" or "AUTO EGG: OFF"
     ToggleEggBtn.BackgroundColor3 = _G.AutoEggPasti and Color3.fromRGB(46, 204, 113) or Color3.fromRGB(231, 76, 60)
@@ -161,7 +184,8 @@ local function updateUI()
     ToggleMergeBtn.BackgroundColor3 = _G.AutoMergeChicken and Color3.fromRGB(46, 204, 113) or Color3.fromRGB(231, 76, 60)
 
     ToggleUpgradeBtn.Text = _G.AutoUpgradeProcess and "AUTO UPGRADE PROCESS: ACTIVE" or "AUTO UPGRADE PROCESS: OFF"
-    ToggleUpgradeBtn.BackgroundColor3 = _G.AutoUpgradeProcess and Color3.fromRGB(46, 204, 113) or Color3.fromRGB(231, 76, 60)end
+    ToggleUpgradeBtn.BackgroundColor3 = _G.AutoUpgradeProcess and Color3.fromRGB(46, 204, 113) or Color3.fromRGB(231, 76, 60)
+end
 
 task.spawn(function()
     while true do
@@ -174,7 +198,8 @@ task.spawn(function()
                 end
             end
         end
-    endend)
+    end
+end)
 
 task.spawn(function()
     while true do
@@ -184,7 +209,8 @@ task.spawn(function()
                 StandardRemoteFunc:InvokeServer("Deposit Eggs")
             end)
         end
-    endend)
+    end
+end)
 
 task.spawn(function()
     while true do
@@ -194,7 +220,8 @@ task.spawn(function()
                 StandardRemoteFunc:InvokeServer("Buy Chickens", _G.ChickenAmount)
             end)
         end
-    endend)
+    end
+end)
 
 task.spawn(function()
     while true do
@@ -204,7 +231,8 @@ task.spawn(function()
                 StandardRemoteFunc:InvokeServer("Collect Cash")
             end)
         end
-    endend)
+    end
+end)
 
 task.spawn(function()
     while true do
@@ -217,7 +245,8 @@ task.spawn(function()
                 MergeRemote:InvokeServer("Merge Chickens")
             end)
         end
-    endend)
+    end
+end)
 
 task.spawn(function()
     while true do
@@ -227,37 +256,41 @@ task.spawn(function()
                 StandardRemoteFunc:InvokeServer("Upgrade Process Level")
             end)
         end
-    endend)
+    end
+end)
 
 ToggleEggBtn.MouseButton1Click:Connect(function()
     _G.AutoEggPasti = not _G.AutoEggPasti
-    updateUI()end)
+    updateUI()
+end)
 
 ToggleDepositBtn.MouseButton1Click:Connect(function()
     _G.AutoDeposit = not _G.AutoDeposit
-    updateUI()end)
+    updateUI()
+end)
 
 ToggleChickenBtn.MouseButton1Click:Connect(function()
     _G.AutoBuyChicken = not _G.AutoBuyChicken
-    updateUI()end)
+    updateUI()
+end)
 
 ToggleCashBtn.MouseButton1Click:Connect(function()
     _G.AutoCollectCash = not _G.AutoCollectCash
-    updateUI()end)
+    updateUI()
+end)
 
 ToggleMergeBtn.MouseButton1Click:Connect(function()
     _G.AutoMergeChicken = not _G.AutoMergeChicken
-    updateUI()end)
+    updateUI()
+end)
 
 ToggleUpgradeBtn.MouseButton1Click:Connect(function()
     _G.AutoUpgradeProcess = not _G.AutoUpgradeProcess
     updateUI()
+
     game:GetService("StarterGui"):SetCore("SendNotification", {
-
-Title = "Egg Hub",
-Text = _G.AutoUpgradeProcess and "Auto Upgrade Process Dinyalakan" or "Auto Upgrade Process Dimatikan",
-Duration = 1.5
-})
+        Title = "Egg Hub",
+        Text = _G.AutoUpgradeProcess and "Auto Upgrade Process Dinyalakan" or "Auto Upgrade Process Dimatikan",
+        Duration = 1.5
+    })
 end)
-
-
