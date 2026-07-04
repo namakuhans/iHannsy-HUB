@@ -225,7 +225,7 @@ end
 
 task.spawn(function()
     while true do
-        task.wait(0.2)
+        task.wait(0.1)
         if _G.AutoEggPasti then
             for _, telur in pairs(FolderEggs:GetChildren()) do
                 if telur and _G.AutoEggPasti then
@@ -239,7 +239,7 @@ end)
 
 task.spawn(function()
     while true do
-        task.wait(5)
+        task.wait(0.1)
         if _G.AutoDeposit then
             pcall(function()
                 StandardRemoteFunc:InvokeServer("Deposit Eggs")
@@ -250,7 +250,7 @@ end)
 
 task.spawn(function()
     while true do
-        task.wait(2)
+        task.wait(0.1)
         if _G.AutoBuyChicken then
             pcall(function()
                 StandardRemoteFunc:InvokeServer("Buy Chickens", _G.ChickenAmount)
@@ -261,7 +261,7 @@ end)
 
 task.spawn(function()
     while true do
-        task.wait(1)
+        task.wait(0.1)
         if _G.AutoCollectCash then
             pcall(function()
                 StandardRemoteFunc:InvokeServer("Collect Cash")
@@ -272,7 +272,7 @@ end)
 
 task.spawn(function()
     while true do
-        task.wait(2.5)
+        task.wait(0.1)
         if _G.AutoMergeChicken then
             pcall(function()
                 if not MergeRemote then
@@ -286,7 +286,7 @@ end)
 
 task.spawn(function()
     while true do
-        task.wait(3)
+        task.wait(0.1)
         if _G.AutoUpgradeProcess then
             pcall(function()
                 StandardRemoteFunc:InvokeServer("Upgrade Process Level")
