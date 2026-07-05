@@ -57,8 +57,13 @@ if game.PlaceId == 137233438285284 then
     })
 
     local SettingsTab = Window:Tab({
-        Title = "Settings & Discord",
+        Title = "Settings",
         Icon = "solar:settings-bold",
+    })
+
+    local AboutTab = Window:Tab({
+        Title = "About",
+        Icon = "solar:info-square-bold",
     })
 
     -- Main Automation Elements
@@ -185,33 +190,7 @@ if game.PlaceId == 137233438285284 then
         end,
     })
 
-    -- Settings & Discord
-    SettingsTab:Section({
-        Title = "Discord Server",
-    })
-
-    SettingsTab:Button({
-        Title = "Join Discord",
-        Desc = "Klik untuk menyalin link Discord",
-        Icon = "solar:link-bold",
-        Callback = function()
-            if setclipboard then
-                setclipboard("https://discord.gg/8wM2tNhUdB")
-                WindUI:Notify({
-                    Title = "Discord iHannsyHUB",
-                    Content = "Link berhasil disalin ke clipboard!",
-                    Duration = 3,
-                })
-            else
-                WindUI:Notify({
-                    Title = "Discord iHannsyHUB",
-                    Content = "https://discord.gg/8wM2tNhUdB",
-                    Duration = 5,
-                })
-            end
-        end,
-    })
-
+    -- Settings Management
     SettingsTab:Section({
         Title = "Config Management",
     })
@@ -253,6 +232,48 @@ if game.PlaceId == 137233438285284 then
                     Title = "Config Dimuat",
                     Content = "Konfigurasi '" .. ConfigName .. "' berhasil dimuat",
                     Duration = 3,
+                })
+            end
+        end,
+    })
+
+    -- About & Discord
+    AboutTab:Section({
+        Title = "Script Info",
+    })
+
+    AboutTab:Section({
+        Title = "Game Support: Chicken Farm!",
+        TextSize = 18,
+    })
+
+    AboutTab:Section({
+        Title = "Other games coming soon...",
+        TextTransparency = 0.5,
+        TextSize = 14,
+    })
+
+    AboutTab:Section({
+        Title = "Discord Community",
+    })
+
+    AboutTab:Button({
+        Title = "Join Discord",
+        Desc = "Click to copy link: discord.gg/8wM2tNhUdB",
+        Icon = "solar:link-bold",
+        Callback = function()
+            if setclipboard then
+                setclipboard("https://discord.gg/8wM2tNhUdB")
+                WindUI:Notify({
+                    Title = "Discord iHannsyHUB",
+                    Content = "Link berhasil disalin!",
+                    Duration = 3,
+                })
+            else
+                WindUI:Notify({
+                    Title = "Discord iHannsyHUB",
+                    Content = "https://discord.gg/8wM2tNhUdB",
+                    Duration = 5,
                 })
             end
         end,
