@@ -9,6 +9,7 @@ if game.PlaceId == 137233438285284 then
     _G.AutoMergeChicken = false
     _G.AutoUpgradeProcess = false
     _G.AutoClaimGuild = false
+    _G.AntiAFK = false
     _G.ChickenAmount = 1
 
     local Window = WindUI:CreateWindow({
@@ -21,7 +22,7 @@ if game.PlaceId == 137233438285284 then
             Key = { "PAKAN" },
             Note = "Join Discord for Key: discord.gg/8wM2tNhUdB",
             URL = "https://discord.gg/8wM2tNhUdB",
-            SaveKey = false, -- Enforce manual entry each run as requested
+            SaveKey = false,
         },
         OpenButton = {
             Enabled = true,
@@ -126,6 +127,20 @@ if game.PlaceId == 137233438285284 then
             WindUI:Notify({
                 Title = "iHannsyHUB",
                 Content = v and "Auto Claim Guild Dinyalakan" or "Auto Claim Guild Dimatikan",
+                Duration = 2,
+            })
+        end,
+    })
+
+    MainTab:Toggle({
+        Title = "Anti-AFK",
+        Value = _G.AntiAFK,
+        Flag = "AntiAFK",
+        Callback = function(v)
+            _G.AntiAFK = v
+            WindUI:Notify({
+                Title = "iHannsyHUB",
+                Content = v and "Anti-AFK Dinyalakan" or "Anti-AFK Dimatikan",
                 Duration = 2,
             })
         end,
@@ -267,6 +282,8 @@ if game.PlaceId == 137233438285284 then
         local CollectRemote = game:GetService("ReplicatedStorage").Paper.Remotes.__remoteevent
         local FolderEggs = workspace:WaitForChild("Eggs")
         local StandardRemoteFunc = game:GetService("ReplicatedStorage").Paper.Remotes.__remotefunction
+        local LocalPlayer = game:GetService("Players").LocalPlayer
+        local VirtualUser = game:GetService("VirtualUser")
 
         local function GetNilRemote(Name, DebugId)
             for _, Object in getnilinstances() do
@@ -282,6 +299,14 @@ if game.PlaceId == 137233438285284 then
         end
 
         local MergeRemote = GetNilRemote("__remotefunction", "1_18021")
+
+        -- Anti-AFK Logic
+        LocalPlayer.Idled:Connect(function()
+            if _G.AntiAFK then
+                VirtualUser:CaptureController()
+                VirtualUser:ClickButton2(Vector2.new())
+            end
+        end)
 
         -- Background Loops
         task.spawn(function()
