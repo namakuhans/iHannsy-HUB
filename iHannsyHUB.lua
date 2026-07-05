@@ -37,7 +37,8 @@ if game.PlaceId == 137233438285284 then
         Title = "iHannsyHUB",
         Author = "iHannsy A.K.A MasPakan",
         Folder = "iHannsyHUB",
-        Icon = "solar:home-2-bold",
+        Icon = "rbxassetid://110043383622723",
+        Theme = "Sky",
         OpenButton = {
             Enabled = true,
             Title = "Open iHannsyHUB",
@@ -47,20 +48,30 @@ if game.PlaceId == 137233438285284 then
 
     local MainTab = Window:Tab({
         Title = "Main Automation",
-        Icon = "solar:settings-bold",
+        Icon = "solar:play-bold",
     })
 
     local ChickenTab = Window:Tab({
         Title = "Chicken Automation",
-        Icon = "solar:star-bold",
+        Icon = "bird",
     })
 
-    local ConfigTab = Window:Tab({
-        Title = "Settings",
-        Icon = "solar:file-text-bold",
+    local SettingsTab = Window:Tab({
+        Title = "Settings & Discord",
+        Icon = "solar:settings-bold",
     })
 
     -- Main Automation Elements
+    MainTab:Image({
+        Image = "rbxassetid://110043383622723",
+        AspectRatio = "1:1",
+        Radius = 9,
+    })
+
+    MainTab:Section({
+        Title = "General Automation",
+    })
+
     MainTab:Toggle({
         Title = "Auto Egg",
         Value = _G.AutoEggPasti,
@@ -132,6 +143,10 @@ if game.PlaceId == 137233438285284 then
     })
 
     -- Chicken Automation Elements
+    ChickenTab:Section({
+        Title = "Chicken Management",
+    })
+
     ChickenTab:Toggle({
         Title = "Auto Buy Chicken",
         Value = _G.AutoBuyChicken,
@@ -170,12 +185,42 @@ if game.PlaceId == 137233438285284 then
         end,
     })
 
-    -- Config Management
+    -- Settings & Discord
+    SettingsTab:Section({
+        Title = "Discord Server",
+    })
+
+    SettingsTab:Button({
+        Title = "Join Discord",
+        Desc = "Klik untuk menyalin link Discord",
+        Icon = "solar:link-bold",
+        Callback = function()
+            if setclipboard then
+                setclipboard("https://discord.gg/8wM2tNhUdB")
+                WindUI:Notify({
+                    Title = "Discord iHannsyHUB",
+                    Content = "Link berhasil disalin ke clipboard!",
+                    Duration = 3,
+                })
+            else
+                WindUI:Notify({
+                    Title = "Discord iHannsyHUB",
+                    Content = "https://discord.gg/8wM2tNhUdB",
+                    Duration = 5,
+                })
+            end
+        end,
+    })
+
+    SettingsTab:Section({
+        Title = "Config Management",
+    })
+
     local ConfigManager = Window.ConfigManager
 
     local ConfigName = "default"
 
-    ConfigTab:Input({
+    SettingsTab:Input({
         Title = "Nama Config",
         Value = ConfigName,
         Callback = function(v)
@@ -183,7 +228,7 @@ if game.PlaceId == 137233438285284 then
         end,
     })
 
-    ConfigTab:Button({
+    SettingsTab:Button({
         Title = "Simpan Config",
         Justify = "Center",
         Callback = function()
@@ -198,7 +243,7 @@ if game.PlaceId == 137233438285284 then
         end,
     })
 
-    ConfigTab:Button({
+    SettingsTab:Button({
         Title = "Muat Config",
         Justify = "Center",
         Callback = function()
