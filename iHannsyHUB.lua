@@ -10,6 +10,8 @@ if game.PlaceId == 137233438285284 then
     _G.AutoUpgradeProcess = false
     _G.AutoClaimGuild = false
     _G.AntiAFK = false
+    _G.WalkSpeedValue = 16
+    _G.JumpPowerValue = 50
     _G.ChickenAmount = 1
 
     local Window = WindUI:CreateWindow({
@@ -39,6 +41,11 @@ if game.PlaceId == 137233438285284 then
     local ChickenTab = Window:Tab({
         Title = "Chicken Automation",
         Icon = "bird",
+    })
+
+    local MiscTab = Window:Tab({
+        Title = "Misc",
+        Icon = "box",
     })
 
     local SettingsTab = Window:Tab({
@@ -132,20 +139,6 @@ if game.PlaceId == 137233438285284 then
         end,
     })
 
-    MainTab:Toggle({
-        Title = "Anti-AFK",
-        Value = _G.AntiAFK,
-        Flag = "AntiAFK",
-        Callback = function(v)
-            _G.AntiAFK = v
-            WindUI:Notify({
-                Title = "iHannsyHUB",
-                Content = v and "Anti-AFK Dinyalakan" or "Anti-AFK Dimatikan",
-                Duration = 2,
-            })
-        end,
-    })
-
     -- Chicken Automation Elements
     ChickenTab:Section({
         Title = "Chicken Management",
@@ -186,6 +179,93 @@ if game.PlaceId == 137233438285284 then
         Flag = "ChickenAmount",
         Callback = function(v)
             _G.ChickenAmount = tonumber(v)
+        end,
+    })
+
+    -- Misc Elements
+    MiscTab:Section({
+        Title = "Player Utilities",
+    })
+
+    MiscTab:Slider({
+        Title = "WalkSpeed",
+        Desc = "Ubah kecepatan jalan karakter",
+        Value = { Min = 16, Max = 200, Default = 16 },
+        Flag = "WalkSpeedSlider",
+        Callback = function(v)
+            _G.WalkSpeedValue = v
+            local char = game:GetService("Players").LocalPlayer.Character
+            if char and char:FindFirstChild("Humanoid") then
+                char.Humanoid.WalkSpeed = v
+            end
+        end,
+    })
+
+    MiscTab:Slider({
+        Title = "JumpPower",
+        Desc = "Ubah kekuatan lompatan karakter",
+        Value = { Min = 50, Max = 500, Default = 50 },
+        Flag = "JumpPowerSlider",
+        Callback = function(v)
+            _G.JumpPowerValue = v
+            local char = game:GetService("Players").LocalPlayer.Character
+            if char and char:FindFirstChild("Humanoid") then
+                char.Humanoid.UseJumpPower = true
+                char.Humanoid.JumpPower = v
+            end
+        end,
+    })
+
+    MiscTab:Toggle({
+        Title = "Anti-AFK",
+        Desc = "Mencegah diskoneksi otomatis",
+        Value = _G.AntiAFK,
+        Flag = "AntiAFK",
+        Callback = function(v)
+            _G.AntiAFK = v
+            WindUI:Notify({
+                Title = "iHannsyHUB",
+                Content = v and "Anti-AFK Dinyalakan" or "Anti-AFK Dimatikan",
+                Duration = 2,
+            })
+        end,
+    })
+
+    MiscTab:Section({
+        Title = "Server Management",
+    })
+
+    MiscTab:Button({
+        Title = "Rejoin Server",
+        Desc = "Masuk kembali ke server ini",
+        Icon = "refresh-cw",
+        Callback = function()
+            local ts = game:GetService("TeleportService")
+            local p = game:GetService("Players").LocalPlayer
+            ts:Teleport(game.PlaceId, p)
+        end,
+    })
+
+    MiscTab:Button({
+        Title = "Server Hop",
+        Desc = "Pindah ke server lain",
+        Icon = "external-link",
+        Callback = function()
+            local HttpService = game:GetService("HttpService")
+            local TeleportService = game:GetService("TeleportService")
+            local PlaceId = game.PlaceId
+            local Players = game:GetService("Players")
+
+            local function hop()
+                local servers = HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/" .. PlaceId .. "/servers/Public?sortOrder=Desc&limit=100")).data
+                for _, server in pairs(servers) do
+                    if server.playing < server.maxPlayers and server.id ~= game.JobId then
+                        TeleportService:TeleportToPlaceInstance(PlaceId, server.id, Players.LocalPlayer)
+                        break
+                    end
+                end
+            end
+            hop()
         end,
     })
 
@@ -306,6 +386,14 @@ if game.PlaceId == 137233438285284 then
                 VirtualUser:CaptureController()
                 VirtualUser:ClickButton2(Vector2.new())
             end
+        end)
+
+        -- Keep WalkSpeed/JumpPower persistent on respawn
+        LocalPlayer.CharacterAdded:Connect(function(char)
+            local hum = char:WaitForChild("Humanoid")
+            hum.WalkSpeed = _G.WalkSpeedValue
+            hum.UseJumpPower = true
+            hum.JumpPower = _G.JumpPowerValue
         end)
 
         -- Background Loops
