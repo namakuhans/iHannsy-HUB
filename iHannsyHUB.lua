@@ -2,7 +2,6 @@ if game.PlaceId == 137233438285284 then
     local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"))()
 
     local StaticKey = "PAKAN"
-    local KeyFileName = "iHannsyHUB_Key.txt"
 
     local function StartHub()
         local CollectRemote = game:GetService("ReplicatedStorage").Paper.Remotes.__remoteevent
@@ -364,85 +363,68 @@ if game.PlaceId == 137233438285284 then
         end)
     end
 
-    -- Persistent Key Check
-    local function CheckSavedKey()
-        if isfile and isfile(KeyFileName) then
-            if readfile(KeyFileName) == StaticKey then
-                return true
+    local KeyWindow = WindUI:CreateWindow({
+        Title = "Key System | iHannsyHUB",
+        Author = "iHannsy A.K.A MasPakan",
+        Icon = "rbxassetid://110043383622723",
+        Theme = "Sky",
+        Size = UDim2.fromOffset(400, 300),
+        OpenButton = { Enabled = false }
+    })
+
+    local KeyTab = KeyWindow:Tab({
+        Title = "Security",
+        Icon = "lock"
+    })
+
+    KeyTab:Section({
+        Title = "Enter Your Key",
+    })
+
+    local KeyInput = ""
+    KeyTab:Input({
+        Title = "Input Key",
+        Placeholder = "Type key here...",
+        Callback = function(v)
+            KeyInput = v
+        end,
+    })
+
+    KeyTab:Button({
+        Title = "Verify Key",
+        Callback = function()
+            if KeyInput == StaticKey then
+                WindUI:Notify({
+                    Title = "Key Verified",
+                    Content = "Welcome to iHannsyHUB!",
+                    Duration = 3,
+                })
+                KeyWindow:Destroy()
+                task.spawn(StartHub)
+            else
+                WindUI:Notify({
+                    Title = "Invalid Key",
+                    Content = "The key you entered is incorrect.",
+                    Duration = 3,
+                })
             end
-        end
-        return false
-    end
+        end,
+    })
 
-    if CheckSavedKey() then
-        StartHub()
-    else
-        local KeyWindow = WindUI:CreateWindow({
-            Title = "Key System | iHannsyHUB",
-            Author = "iHannsy A.K.A MasPakan",
-            Icon = "rbxassetid://110043383622723",
-            Theme = "Sky",
-            Size = UDim2.fromOffset(400, 300),
-            OpenButton = { Enabled = false }
-        })
-
-        local KeyTab = KeyWindow:Tab({
-            Title = "Security",
-            Icon = "lock"
-        })
-
-        KeyTab:Section({
-            Title = "Enter Your Key",
-        })
-
-        local KeyInput = ""
-        KeyTab:Input({
-            Title = "Input Key",
-            Placeholder = "Type key here...",
-            Callback = function(v)
-                KeyInput = v
-            end,
-        })
-
-        KeyTab:Button({
-            Title = "Verify Key",
-            Callback = function()
-                if KeyInput == StaticKey then
-                    if writefile then
-                        writefile(KeyFileName, StaticKey)
-                    end
-                    WindUI:Notify({
-                        Title = "Key Verified",
-                        Content = "Welcome to iHannsyHUB!",
-                        Duration = 3,
-                    })
-                    KeyWindow:Destroy()
-                    task.spawn(StartHub)
-                else
-                    WindUI:Notify({
-                        Title = "Invalid Key",
-                        Content = "The key you entered is incorrect.",
-                        Duration = 3,
-                    })
-                end
-            end,
-        })
-
-        KeyTab:Button({
-            Title = "Get Key (Discord)",
-            Icon = "link",
-            Callback = function()
-                if setclipboard then
-                    setclipboard("https://discord.gg/8wM2tNhUdB")
-                    WindUI:Notify({
-                        Title = "Link Copied",
-                        Content = "Discord link copied to clipboard!",
-                        Duration = 3,
-                    })
-                end
-            end,
-        })
-    end
+    KeyTab:Button({
+        Title = "Get Key (Discord)",
+        Icon = "link",
+        Callback = function()
+            if setclipboard then
+                setclipboard("https://discord.gg/8wM2tNhUdB")
+                WindUI:Notify({
+                    Title = "Link Copied",
+                    Content = "Discord link copied to clipboard!",
+                    Duration = 3,
+                })
+            end
+        end,
+    })
 else
     game:GetService("StarterGui"):SetCore("SendNotification", {
         Title = "iHannsyHUB",
