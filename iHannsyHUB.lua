@@ -1,6 +1,10 @@
 if game.PlaceId == 137233438285284 then
+    local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"))()
+
     local CollectRemote = game:GetService("ReplicatedStorage").Paper.Remotes.__remoteevent
+
     local FolderEggs = workspace:WaitForChild("Eggs")
+
     local LocalPlayer = game:GetService("Players").LocalPlayer
 
     local function GetNilRemote(Name, DebugId)
@@ -17,6 +21,7 @@ if game.PlaceId == 137233438285284 then
     end
 
     local StandardRemoteFunc = game:GetService("ReplicatedStorage").Paper.Remotes.__remotefunction
+
     local MergeRemote = GetNilRemote("__remotefunction", "1_18021")
 
     _G.AutoEggPasti = false
@@ -28,202 +33,187 @@ if game.PlaceId == 137233438285284 then
     _G.AutoClaimGuild = false
     _G.ChickenAmount = 1
 
-    task.wait(0.2)
+    local Window = WindUI:CreateWindow({
+        Title = "iHannsyHUB",
+        Author = "iHannsy A.K.A MasPakan",
+        Folder = "iHannsyHUB",
+        Icon = "solar:home-2-bold",
+        OpenButton = {
+            Enabled = true,
+            Title = "Open iHannsyHUB",
+            Draggable = true,
+        },
+    })
 
-    local ScreenGui = Instance.new("ScreenGui")
-    local MainFrame = Instance.new("Frame")
-    local Title = Instance.new("TextLabel")
-    local MinimizeBtn = Instance.new("TextButton")
-    local OpenBtn = Instance.new("TextButton")
-    local ToggleEggBtn = Instance.new("TextButton")
-    local ToggleDepositBtn = Instance.new("TextButton")
-    local ToggleChickenBtn = Instance.new("TextButton")
-    local ToggleCashBtn = Instance.new("TextButton")
-    local ToggleMergeBtn = Instance.new("TextButton")
-    local ToggleUpgradeBtn = Instance.new("TextButton")
-    local ToggleGuildBtn = Instance.new("TextButton")
-    local DropdownBtn = Instance.new("TextButton")
-    local DropdownFrame = Instance.new("Frame")
-    local Credit = Instance.new("TextLabel")
+    local MainTab = Window:Tab({
+        Title = "Main Automation",
+        Icon = "solar:settings-bold",
+    })
 
-    ScreenGui.Parent = game:GetService("CoreGui")
-    ScreenGui.ResetOnSpawn = false
+    local ChickenTab = Window:Tab({
+        Title = "Chicken Automation",
+        Icon = "solar:star-bold",
+    })
 
-    MainFrame.Name = "ManualControlUltimateHub"
-    MainFrame.Parent = ScreenGui
-    MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-    MainFrame.Position = UDim2.new(0.1, 0, 0.15, 0)
-    MainFrame.Size = UDim2.new(0, 240, 0, 470)
-    MainFrame.Active = true
-    MainFrame.Draggable = true
+    local ConfigTab = Window:Tab({
+        Title = "Settings",
+        Icon = "solar:file-text-bold",
+    })
 
-    Title.Parent = MainFrame
-    Title.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-    Title.Size = UDim2.new(1, 0, 0, 40)
-    Title.Font = Enum.Font.SourceSansBold
-    Title.Text = "iHannsyHUB - Pre release"
-    Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-    Title.TextSize = 16
+    -- Main Automation Elements
+    MainTab:Toggle({
+        Title = "Auto Egg",
+        Value = _G.AutoEggPasti,
+        Flag = "AutoEggPasti",
+        Callback = function(v)
+            _G.AutoEggPasti = v
+            WindUI:Notify({
+                Title = "iHannsyHUB",
+                Content = v and "Auto Egg Dinyalakan" or "Auto Egg Dimatikan",
+                Duration = 2,
+            })
+        end,
+    })
 
-    MinimizeBtn.Parent = Title
-    MinimizeBtn.BackgroundColor3 = Color3.fromRGB(231, 76, 60)
-    MinimizeBtn.Position = UDim2.new(1, -35, 0, 5)
-    MinimizeBtn.Size = UDim2.new(0, 30, 0, 30)
-    MinimizeBtn.Font = Enum.Font.SourceSansBold
-    MinimizeBtn.Text = "-"
-    MinimizeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    MinimizeBtn.TextSize = 20
+    MainTab:Toggle({
+        Title = "Auto Deposit",
+        Value = _G.AutoDeposit,
+        Flag = "AutoDeposit",
+        Callback = function(v)
+            _G.AutoDeposit = v
+            WindUI:Notify({
+                Title = "iHannsyHUB",
+                Content = v and "Auto Deposit Dinyalakan" or "Auto Deposit Dimatikan",
+                Duration = 2,
+            })
+        end,
+    })
 
-    OpenBtn.Name = "OpenHubBtn"
-    OpenBtn.Parent = ScreenGui
-    OpenBtn.BackgroundColor3 = Color3.fromRGB(46, 204, 113)
-    OpenBtn.Position = UDim2.new(0.02, 0, 0.15, 0)
-    OpenBtn.Size = UDim2.new(0, 80, 0, 30)
-    OpenBtn.Font = Enum.Font.SourceSansBold
-    OpenBtn.Text = "OPEN HUB"
-    OpenBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    OpenBtn.TextSize = 12
-    OpenBtn.Visible = false
+    MainTab:Toggle({
+        Title = "Auto Collect Cash",
+        Value = _G.AutoCollectCash,
+        Flag = "AutoCollectCash",
+        Callback = function(v)
+            _G.AutoCollectCash = v
+            WindUI:Notify({
+                Title = "iHannsyHUB",
+                Content = v and "Auto Collect Cash Dinyalakan" or "Auto Collect Cash Dimatikan",
+                Duration = 2,
+            })
+        end,
+    })
 
-    ToggleEggBtn.Parent = MainFrame
-    ToggleEggBtn.BackgroundColor3 = Color3.fromRGB(231, 76, 60)
-    ToggleEggBtn.Position = UDim2.new(0.05, 0, 0.11, 0)
-    ToggleEggBtn.Size = UDim2.new(0.9, 0, 0, 30)
-    ToggleEggBtn.Font = Enum.Font.SourceSansBold
-    ToggleEggBtn.Text = "AUTO EGG: OFF"
-    ToggleEggBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    ToggleEggBtn.TextSize = 12
+    MainTab:Toggle({
+        Title = "Auto Upgrade Process",
+        Value = _G.AutoUpgradeProcess,
+        Flag = "AutoUpgradeProcess",
+        Callback = function(v)
+            _G.AutoUpgradeProcess = v
+            WindUI:Notify({
+                Title = "iHannsyHUB",
+                Content = v and "Auto Upgrade Process Dinyalakan" or "Auto Upgrade Process Dimatikan",
+                Duration = 2,
+            })
+        end,
+    })
 
-    ToggleDepositBtn.Parent = MainFrame
-    ToggleDepositBtn.BackgroundColor3 = Color3.fromRGB(231, 76, 60)
-    ToggleDepositBtn.Position = UDim2.new(0.05, 0, 0.19, 0)
-    ToggleDepositBtn.Size = UDim2.new(0.9, 0, 0, 30)
-    ToggleDepositBtn.Font = Enum.Font.SourceSansBold
-    ToggleDepositBtn.Text = "AUTO DEPOSIT: OFF"
-    ToggleDepositBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    ToggleDepositBtn.TextSize = 12
+    MainTab:Toggle({
+        Title = "Auto Claim Guild",
+        Value = _G.AutoClaimGuild,
+        Flag = "AutoClaimGuild",
+        Callback = function(v)
+            _G.AutoClaimGuild = v
+            WindUI:Notify({
+                Title = "iHannsyHUB",
+                Content = v and "Auto Claim Guild Dinyalakan" or "Auto Claim Guild Dimatikan",
+                Duration = 2,
+            })
+        end,
+    })
 
-    ToggleChickenBtn.Parent = MainFrame
-    ToggleChickenBtn.BackgroundColor3 = Color3.fromRGB(231, 76, 60)
-    ToggleChickenBtn.Position = UDim2.new(0.05, 0, 0.27, 0)
-    ToggleChickenBtn.Size = UDim2.new(0.9, 0, 0, 30)
-    ToggleChickenBtn.Font = Enum.Font.SourceSansBold
-    ToggleChickenBtn.Text = "AUTO CHICKEN: OFF"
-    ToggleChickenBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    ToggleChickenBtn.TextSize = 12
+    -- Chicken Automation Elements
+    ChickenTab:Toggle({
+        Title = "Auto Buy Chicken",
+        Value = _G.AutoBuyChicken,
+        Flag = "AutoBuyChicken",
+        Callback = function(v)
+            _G.AutoBuyChicken = v
+            WindUI:Notify({
+                Title = "iHannsyHUB",
+                Content = v and "Auto Buy Chicken Dinyalakan" or "Auto Buy Chicken Dimatikan",
+                Duration = 2,
+            })
+        end,
+    })
 
-    ToggleCashBtn.Parent = MainFrame
-    ToggleCashBtn.BackgroundColor3 = Color3.fromRGB(231, 76, 60)
-    ToggleCashBtn.Position = UDim2.new(0.05, 0, 0.35, 0)
-    ToggleCashBtn.Size = UDim2.new(0.9, 0, 0, 30)
-    ToggleCashBtn.Font = Enum.Font.SourceSansBold
-    ToggleCashBtn.Text = "AUTO CASH: OFF"
-    ToggleCashBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    ToggleCashBtn.TextSize = 12
+    ChickenTab:Toggle({
+        Title = "Auto Merge Chicken",
+        Value = _G.AutoMergeChicken,
+        Flag = "AutoMergeChicken",
+        Callback = function(v)
+            _G.AutoMergeChicken = v
+            WindUI:Notify({
+                Title = "iHannsyHUB",
+                Content = v and "Auto Merge Chicken Dinyalakan" or "Auto Merge Chicken Dimatikan",
+                Duration = 2,
+            })
+        end,
+    })
 
-    ToggleMergeBtn.Parent = MainFrame
-    ToggleMergeBtn.BackgroundColor3 = Color3.fromRGB(231, 76, 60)
-    ToggleMergeBtn.Position = UDim2.new(0.05, 0, 0.43, 0)
-    ToggleMergeBtn.Size = UDim2.new(0.9, 0, 0, 30)
-    ToggleMergeBtn.Font = Enum.Font.SourceSansBold
-    ToggleMergeBtn.Text = "AUTO MERGE: OFF"
-    ToggleMergeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    ToggleMergeBtn.TextSize = 12
+    ChickenTab:Dropdown({
+        Title = "Jumlah Beli Ayam",
+        Values = {"1", "5", "25", "100"},
+        Value = tostring(_G.ChickenAmount),
+        Flag = "ChickenAmount",
+        Callback = function(v)
+            _G.ChickenAmount = tonumber(v)
+        end,
+    })
 
-    ToggleUpgradeBtn.Parent = MainFrame
-    ToggleUpgradeBtn.BackgroundColor3 = Color3.fromRGB(231, 76, 60)
-    ToggleUpgradeBtn.Position = UDim2.new(0.05, 0, 0.51, 0)
-    ToggleUpgradeBtn.Size = UDim2.new(0.9, 0, 0, 30)
-    ToggleUpgradeBtn.Font = Enum.Font.SourceSansBold
-    ToggleUpgradeBtn.Text = "AUTO UPGRADE PROCESS: OFF"
-    ToggleUpgradeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    ToggleUpgradeBtn.TextSize = 12
+    -- Config Management
+    local ConfigManager = Window.ConfigManager
 
-    ToggleGuildBtn.Parent = MainFrame
-    ToggleGuildBtn.BackgroundColor3 = Color3.fromRGB(231, 76, 60)
-    ToggleGuildBtn.Position = UDim2.new(0.05, 0, 0.59, 0)
-    ToggleGuildBtn.Size = UDim2.new(0.9, 0, 0, 30)
-    ToggleGuildBtn.Font = Enum.Font.SourceSansBold
-    ToggleGuildBtn.Text = "AUTO CLAIM GUILD: OFF"
-    ToggleGuildBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    ToggleGuildBtn.TextSize = 12
+    local ConfigName = "default"
 
-    DropdownBtn.Parent = MainFrame
-    DropdownBtn.BackgroundColor3 = Color3.fromRGB(45, 52, 54)
-    DropdownBtn.Position = UDim2.new(0.05, 0, 0.72, 0)
-    DropdownBtn.Size = UDim2.new(0.9, 0, 0, 30)
-    DropdownBtn.Font = Enum.Font.SourceSansBold
-    DropdownBtn.Text = "JUMLAH BELI AYAM: 1 ▼"
-    DropdownBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    DropdownBtn.TextSize = 12
+    ConfigTab:Input({
+        Title = "Nama Config",
+        Value = ConfigName,
+        Callback = function(v)
+            ConfigName = v
+        end,
+    })
 
-    DropdownFrame.Parent = MainFrame
-    DropdownFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-    DropdownFrame.Position = UDim2.new(0.05, 0, 0.80, 0)
-    DropdownFrame.Size = UDim2.new(0.9, 0, 0, 35)
-    DropdownFrame.Visible = false
-    DropdownFrame.ZIndex = 5
+    ConfigTab:Button({
+        Title = "Simpan Config",
+        Justify = "Center",
+        Callback = function()
+            Window.CurrentConfig = ConfigManager:Config(ConfigName)
+            if Window.CurrentConfig:Save() then
+                WindUI:Notify({
+                    Title = "Config Tersimpan",
+                    Content = "Konfigurasi '" .. ConfigName .. "' berhasil disimpan",
+                    Duration = 3,
+                })
+            end
+        end,
+    })
 
-    Credit.Parent = MainFrame
-    Credit.BackgroundTransparency = 1
-    Credit.Position = UDim2.new(0, 0, 0.94, 0)
-    Credit.Size = UDim2.new(1, 0, 0, 20)
-    Credit.Font = Enum.Font.SourceSansItalic
-    Credit.Text = "Full Script Hub Rewritten"
-    Credit.TextColor3 = Color3.fromRGB(130, 130, 130)
-    Credit.TextSize = 11
+    ConfigTab:Button({
+        Title = "Muat Config",
+        Justify = "Center",
+        Callback = function()
+            Window.CurrentConfig = ConfigManager:CreateConfig(ConfigName)
+            if Window.CurrentConfig:Load() then
+                WindUI:Notify({
+                    Title = "Config Dimuat",
+                    Content = "Konfigurasi '" .. ConfigName .. "' berhasil dimuat",
+                    Duration = 3,
+                })
+            end
+        end,
+    })
 
-    local options = {1, 5, 25, 100}
-    local listLayout = Instance.new("UIListLayout")
-    listLayout.Parent = DropdownFrame
-    listLayout.FillDirection = Enum.FillDirection.Horizontal
-    listLayout.SortOrder = Enum.SortOrder.LayoutOrder
-
-    for i, val in ipairs(options) do
-        local optBtn = Instance.new("TextButton")
-        optBtn.Parent = DropdownFrame
-        optBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-        optBtn.Size = UDim2.new(0.25, 0, 1, 0)
-        optBtn.Font = Enum.Font.SourceSansBold
-        optBtn.Text = tostring(val)
-        optBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-        optBtn.TextSize = 11
-        optBtn.ZIndex = 6
-
-        optBtn.MouseButton1Click:Connect(function()
-            _G.ChickenAmount = val
-            DropdownBtn.Text = "JUMLAH BELI AYAM: " .. tostring(val) .. " ▼"
-            DropdownFrame.Visible = false
-        end)
-    end
-
-    DropdownBtn.MouseButton1Click:Connect(function()
-        DropdownFrame.Visible = not DropdownFrame.Visible
-    end)
-
-    local function updateUI()
-        ToggleEggBtn.Text = _G.AutoEggPasti and "AUTO EGG: ACTIVE" or "AUTO EGG: OFF"
-        ToggleEggBtn.BackgroundColor3 = _G.AutoEggPasti and Color3.fromRGB(46, 204, 113) or Color3.fromRGB(231, 76, 60)
-
-        ToggleDepositBtn.Text = _G.AutoDeposit and "AUTO DEPOSIT: ACTIVE" or "AUTO DEPOSIT: OFF"
-        ToggleDepositBtn.BackgroundColor3 = _G.AutoDeposit and Color3.fromRGB(46, 204, 113) or Color3.fromRGB(231, 76, 60)
-
-        ToggleChickenBtn.Text = _G.AutoBuyChicken and "AUTO CHICKEN: ACTIVE" or "AUTO CHICKEN: OFF"
-        ToggleChickenBtn.BackgroundColor3 = _G.AutoBuyChicken and Color3.fromRGB(46, 204, 113) or Color3.fromRGB(231, 76, 60)
-
-        ToggleCashBtn.Text = _G.AutoCollectCash and "AUTO CASH: ACTIVE" or "AUTO CASH: OFF"
-        ToggleCashBtn.BackgroundColor3 = _G.AutoCollectCash and Color3.fromRGB(46, 204, 113) or Color3.fromRGB(231, 76, 60)
-
-        ToggleMergeBtn.Text = _G.AutoMergeChicken and "AUTO MERGE: ACTIVE" or "AUTO MERGE: OFF"
-        ToggleMergeBtn.BackgroundColor3 = _G.AutoMergeChicken and Color3.fromRGB(46, 204, 113) or Color3.fromRGB(231, 76, 60)
-
-        ToggleUpgradeBtn.Text = _G.AutoUpgradeProcess and "AUTO UPGRADE PROCESS: ACTIVE" or "AUTO UPGRADE PROCESS: OFF"
-        ToggleUpgradeBtn.BackgroundColor3 = _G.AutoUpgradeProcess and Color3.fromRGB(46, 204, 113) or Color3.fromRGB(231, 76, 60)
-
-        ToggleGuildBtn.Text = _G.AutoClaimGuild and "AUTO CLAIM GUILD: ACTIVE" or "AUTO CLAIM GUILD: OFF"
-        ToggleGuildBtn.BackgroundColor3 = _G.AutoClaimGuild and Color3.fromRGB(46, 204, 113) or Color3.fromRGB(231, 76, 60)
-    end
-
+    -- Background Loops
     task.spawn(function()
         while true do
             task.wait(0.2)
@@ -244,7 +234,8 @@ if game.PlaceId == 137233438285284 then
             if _G.AutoDeposit then
                 pcall(function()
                     StandardRemoteFunc:InvokeServer("Deposit Eggs")
-                end)
+                end
+                )
             end
         end
     end)
@@ -255,7 +246,8 @@ if game.PlaceId == 137233438285284 then
             if _G.AutoBuyChicken then
                 pcall(function()
                     StandardRemoteFunc:InvokeServer("Buy Chickens", _G.ChickenAmount)
-                end)
+                end
+                )
             end
         end
     end)
@@ -266,7 +258,8 @@ if game.PlaceId == 137233438285284 then
             if _G.AutoCollectCash then
                 pcall(function()
                     StandardRemoteFunc:InvokeServer("Collect Cash")
-                end)
+                end
+                )
             end
         end
     end)
@@ -280,7 +273,8 @@ if game.PlaceId == 137233438285284 then
                         MergeRemote = GetNilRemote("__remotefunction", "1_18021")
                     end
                     MergeRemote:InvokeServer("Merge Chickens")
-                end)
+                end
+                )
             end
         end
     end)
@@ -291,7 +285,8 @@ if game.PlaceId == 137233438285284 then
             if _G.AutoUpgradeProcess then
                 pcall(function()
                     StandardRemoteFunc:InvokeServer("Upgrade Process Level")
-                end)
+                end
+                )
             end
         end
     end)
@@ -301,67 +296,11 @@ if game.PlaceId == 137233438285284 then
             if _G.AutoClaimGuild then
                 pcall(function()
                     StandardRemoteFunc:InvokeServer("Claim Group Reward")
-                end)
+                end
+                )
             end
             task.wait(600)
         end
-    end)
-
-    ToggleEggBtn.MouseButton1Click:Connect(function()
-        _G.AutoEggPasti = not _G.AutoEggPasti
-        updateUI()
-    end)
-
-    ToggleDepositBtn.MouseButton1Click:Connect(function()
-        _G.AutoDeposit = not _G.AutoDeposit
-        updateUI()
-    end)
-
-    ToggleChickenBtn.MouseButton1Click:Connect(function()
-        _G.AutoBuyChicken = not _G.AutoBuyChicken
-        updateUI()
-    end)
-
-    ToggleCashBtn.MouseButton1Click:Connect(function()
-        _G.AutoCollectCash = not _G.AutoCollectCash
-        updateUI()
-    end)
-
-    ToggleMergeBtn.MouseButton1Click:Connect(function()
-        _G.AutoMergeChicken = not _G.AutoMergeChicken
-        updateUI()
-    end)
-
-    ToggleUpgradeBtn.MouseButton1Click:Connect(function()
-        _G.AutoUpgradeProcess = not _G.AutoUpgradeProcess
-        updateUI()
-
-        game:GetService("StarterGui"):SetCore("SendNotification", {
-            Title = "Egg Hub",
-            Text = _G.AutoUpgradeProcess and "Auto Upgrade Process Dinyalakan" or "Auto Upgrade Process Dimatikan",
-            Duration = 1.5
-        })
-    end)
-
-    ToggleGuildBtn.MouseButton1Click:Connect(function()
-        _G.AutoClaimGuild = not _G.AutoClaimGuild
-        updateUI()
-
-        game:GetService("StarterGui"):SetCore("SendNotification", {
-            Title = "Egg Hub",
-            Text = _G.AutoClaimGuild and "Auto Claim Guild Dinyalakan" or "Auto Claim Guild Dimatikan",
-            Duration = 1.5
-        })
-    end)
-
-    MinimizeBtn.MouseButton1Click:Connect(function()
-        MainFrame.Visible = false
-        OpenBtn.Visible = true
-    end)
-
-    OpenBtn.MouseButton1Click:Connect(function()
-        MainFrame.Visible = true
-        OpenBtn.Visible = false
     end)
 else
     game:GetService("StarterGui"):SetCore("SendNotification", {
