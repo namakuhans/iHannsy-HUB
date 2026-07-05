@@ -49,7 +49,7 @@ if game.PlaceId == 137233438285284 then
 
         local MainTab = Window:Tab({
             Title = "Main Automation",
-            Icon = "solar:play-bold",
+            Icon = "play",
         })
 
         local ChickenTab = Window:Tab({
@@ -59,12 +59,12 @@ if game.PlaceId == 137233438285284 then
 
         local SettingsTab = Window:Tab({
             Title = "Settings",
-            Icon = "solar:settings-bold",
+            Icon = "settings",
         })
 
         local AboutTab = Window:Tab({
             Title = "About",
-            Icon = "solar:info-square-bold",
+            Icon = "info",
         })
 
         -- Main Automation Elements
@@ -260,7 +260,7 @@ if game.PlaceId == 137233438285284 then
         AboutTab:Button({
             Title = "Join Discord",
             Desc = "Click to copy link: discord.gg/8wM2tNhUdB",
-            Icon = "solar:link-bold",
+            Icon = "link",
             Callback = function()
                 if setclipboard then
                     setclipboard("https://discord.gg/8wM2tNhUdB")
@@ -388,7 +388,7 @@ if game.PlaceId == 137233438285284 then
 
         local KeyTab = KeyWindow:Tab({
             Title = "Security",
-            Icon = "solar:lock-password-bold"
+            Icon = "lock"
         })
 
         KeyTab:Section({
@@ -430,7 +430,7 @@ if game.PlaceId == 137233438285284 then
 
         KeyTab:Button({
             Title = "Get Key (Discord)",
-            Icon = "solar:link-bold",
+            Icon = "link",
             Callback = function()
                 if setclipboard then
                     setclipboard("https://discord.gg/8wM2tNhUdB")
