@@ -417,7 +417,7 @@ if game.PlaceId == 137233438285284 then
                         Duration = 3,
                     })
                     KeyWindow:Destroy()
-                    StartHub()
+                    task.spawn(StartHub)
                 else
                     WindUI:Notify({
                         Title = "Invalid Key",
