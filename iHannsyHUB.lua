@@ -1,7 +1,7 @@
 if game.PlaceId == 137233438285284 then
     local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"))()
 
-    local StaticKey = "iHannsyHUB_Free"
+    local StaticKey = "PAKAN"
     local KeyFileName = "iHannsyHUB_Key.txt"
 
     local function StartHub()
