@@ -4,35 +4,6 @@ if game.PlaceId == 137233438285284 then
     local StaticKey = "PAKAN"
 
     local function StartHub()
-        local CollectRemote = game:GetService("ReplicatedStorage").Paper.Remotes.__remoteevent
-        local FolderEggs = workspace:WaitForChild("Eggs")
-        local LocalPlayer = game:GetService("Players").LocalPlayer
-
-        local function GetNilRemote(Name, DebugId)
-            for _, Object in getnilinstances() do
-                if Object.Name == Name and Object:GetDebugId() == DebugId then
-                    return Object
-                end
-            end
-            for _, Object in getnilinstances() do
-                if Object.Name == Name and Object:IsA("RemoteFunction") then
-                    return Object
-                end
-            end
-        end
-
-        local StandardRemoteFunc = game:GetService("ReplicatedStorage").Paper.Remotes.__remotefunction
-        local MergeRemote = GetNilRemote("__remotefunction", "1_18021")
-
-        _G.AutoEggPasti = false
-        _G.AutoDeposit = false
-        _G.AutoBuyChicken = false
-        _G.AutoCollectCash = false
-        _G.AutoMergeChicken = false
-        _G.AutoUpgradeProcess = false
-        _G.AutoClaimGuild = false
-        _G.ChickenAmount = 1
-
         local Window = WindUI:CreateWindow({
             Title = "iHannsyHUB",
             Author = "iHannsy A.K.A MasPakan",
@@ -79,7 +50,7 @@ if game.PlaceId == 137233438285284 then
 
         MainTab:Toggle({
             Title = "Auto Egg",
-            Value = _G.AutoEggPasti,
+            Value = false,
             Flag = "AutoEggPasti",
             Callback = function(v)
                 _G.AutoEggPasti = v
@@ -93,7 +64,7 @@ if game.PlaceId == 137233438285284 then
 
         MainTab:Toggle({
             Title = "Auto Deposit",
-            Value = _G.AutoDeposit,
+            Value = false,
             Flag = "AutoDeposit",
             Callback = function(v)
                 _G.AutoDeposit = v
@@ -107,7 +78,7 @@ if game.PlaceId == 137233438285284 then
 
         MainTab:Toggle({
             Title = "Auto Collect Cash",
-            Value = _G.AutoCollectCash,
+            Value = false,
             Flag = "AutoCollectCash",
             Callback = function(v)
                 _G.AutoCollectCash = v
@@ -121,7 +92,7 @@ if game.PlaceId == 137233438285284 then
 
         MainTab:Toggle({
             Title = "Auto Upgrade Process",
-            Value = _G.AutoUpgradeProcess,
+            Value = false,
             Flag = "AutoUpgradeProcess",
             Callback = function(v)
                 _G.AutoUpgradeProcess = v
@@ -135,7 +106,7 @@ if game.PlaceId == 137233438285284 then
 
         MainTab:Toggle({
             Title = "Auto Claim Guild",
-            Value = _G.AutoClaimGuild,
+            Value = false,
             Flag = "AutoClaimGuild",
             Callback = function(v)
                 _G.AutoClaimGuild = v
@@ -154,7 +125,7 @@ if game.PlaceId == 137233438285284 then
 
         ChickenTab:Toggle({
             Title = "Auto Buy Chicken",
-            Value = _G.AutoBuyChicken,
+            Value = false,
             Flag = "AutoBuyChicken",
             Callback = function(v)
                 _G.AutoBuyChicken = v
@@ -168,7 +139,7 @@ if game.PlaceId == 137233438285284 then
 
         ChickenTab:Toggle({
             Title = "Auto Merge Chicken",
-            Value = _G.AutoMergeChicken,
+            Value = false,
             Flag = "AutoMergeChicken",
             Callback = function(v)
                 _G.AutoMergeChicken = v
@@ -183,7 +154,7 @@ if game.PlaceId == 137233438285284 then
         ChickenTab:Dropdown({
             Title = "Jumlah Beli Ayam",
             Values = {"1", "5", "25", "100"},
-            Value = tostring(_G.ChickenAmount),
+            Value = "1",
             Flag = "ChickenAmount",
             Callback = function(v)
                 _G.ChickenAmount = tonumber(v)
@@ -278,88 +249,119 @@ if game.PlaceId == 137233438285284 then
             end,
         })
 
-        -- Background Loops
+        -- Late Game Init (untuk memastikan UI muncul duluan)
         task.spawn(function()
-            while true do
-                task.wait(0.2)
-                if _G.AutoEggPasti then
-                    for _, telur in pairs(FolderEggs:GetChildren()) do
-                        if telur and _G.AutoEggPasti then
-                            CollectRemote:FireServer("Collect Egg", telur.Name)
-                            telur:Destroy()
-                        end
+            local CollectRemote = game:GetService("ReplicatedStorage").Paper.Remotes.__remoteevent
+            local FolderEggs = workspace:WaitForChild("Eggs")
+            local StandardRemoteFunc = game:GetService("ReplicatedStorage").Paper.Remotes.__remotefunction
+
+            local function GetNilRemote(Name, DebugId)
+                for _, Object in getnilinstances() do
+                    if Object.Name == Name and Object:GetDebugId() == DebugId then
+                        return Object
+                    end
+                end
+                for _, Object in getnilinstances() do
+                    if Object.Name == Name and Object:IsA("RemoteFunction") then
+                        return Object
                     end
                 end
             end
-        end)
 
-        task.spawn(function()
-            while true do
-                task.wait(5)
-                if _G.AutoDeposit then
-                    pcall(function()
-                        StandardRemoteFunc:InvokeServer("Deposit Eggs")
-                    end)
-                end
-            end
-        end)
+            local MergeRemote = GetNilRemote("__remotefunction", "1_18021")
 
-        task.spawn(function()
-            while true do
-                task.wait(2)
-                if _G.AutoBuyChicken then
-                    pcall(function()
-                        StandardRemoteFunc:InvokeServer("Buy Chickens", _G.ChickenAmount)
-                    end)
-                end
-            end
-        end)
+            _G.AutoEggPasti = false
+            _G.AutoDeposit = false
+            _G.AutoBuyChicken = false
+            _G.AutoCollectCash = false
+            _G.AutoMergeChicken = false
+            _G.AutoUpgradeProcess = false
+            _G.AutoClaimGuild = false
+            _G.ChickenAmount = 1
 
-        task.spawn(function()
-            while true do
-                task.wait(1)
-                if _G.AutoCollectCash then
-                    pcall(function()
-                        StandardRemoteFunc:InvokeServer("Collect Cash")
-                    end)
-                end
-            end
-        end)
-
-        task.spawn(function()
-            while true do
-                task.wait(2.5)
-                if _G.AutoMergeChicken then
-                    pcall(function()
-                        if not MergeRemote then
-                            MergeRemote = GetNilRemote("__remotefunction", "1_18021")
+            -- Background Loops
+            task.spawn(function()
+                while true do
+                    task.wait(0.2)
+                    if _G.AutoEggPasti then
+                        for _, telur in pairs(FolderEggs:GetChildren()) do
+                            if telur and _G.AutoEggPasti then
+                                CollectRemote:FireServer("Collect Egg", telur.Name)
+                                telur:Destroy()
+                            end
                         end
-                        MergeRemote:InvokeServer("Merge Chickens")
-                    end)
+                    end
                 end
-            end
-        end)
+            end)
 
-        task.spawn(function()
-            while true do
-                task.wait(3)
-                if _G.AutoUpgradeProcess then
-                    pcall(function()
-                        StandardRemoteFunc:InvokeServer("Upgrade Process Level")
-                    end)
+            task.spawn(function()
+                while true do
+                    task.wait(5)
+                    if _G.AutoDeposit then
+                        pcall(function()
+                            StandardRemoteFunc:InvokeServer("Deposit Eggs")
+                        end)
+                    end
                 end
-            end
-        end)
+            end)
 
-        task.spawn(function()
-            while true do
-                if _G.AutoClaimGuild then
-                    pcall(function()
-                        StandardRemoteFunc:InvokeServer("Claim Group Reward")
-                    end)
+            task.spawn(function()
+                while true do
+                    task.wait(2)
+                    if _G.AutoBuyChicken then
+                        pcall(function()
+                            StandardRemoteFunc:InvokeServer("Buy Chickens", _G.ChickenAmount)
+                        end)
+                    end
                 end
-                task.wait(600)
-            end
+            end)
+
+            task.spawn(function()
+                while true do
+                    task.wait(1)
+                    if _G.AutoCollectCash then
+                        pcall(function()
+                            StandardRemoteFunc:InvokeServer("Collect Cash")
+                        end)
+                    end
+                end
+            end)
+
+            task.spawn(function()
+                while true do
+                    task.wait(2.5)
+                    if _G.AutoMergeChicken then
+                        pcall(function()
+                            if not MergeRemote then
+                                MergeRemote = GetNilRemote("__remotefunction", "1_18021")
+                            end
+                            MergeRemote:InvokeServer("Merge Chickens")
+                        end)
+                    end
+                end
+            end)
+
+            task.spawn(function()
+                while true do
+                    task.wait(3)
+                    if _G.AutoUpgradeProcess then
+                        pcall(function()
+                            StandardRemoteFunc:InvokeServer("Upgrade Process Level")
+                        end)
+                    end
+                end
+            end)
+
+            task.spawn(function()
+                while true do
+                    if _G.AutoClaimGuild then
+                        pcall(function()
+                            StandardRemoteFunc:InvokeServer("Claim Group Reward")
+                        end)
+                    end
+                    task.wait(600)
+                end
+            end)
         end)
     end
 
@@ -400,6 +402,7 @@ if game.PlaceId == 137233438285284 then
                     Duration = 3,
                 })
                 KeyWindow:Destroy()
+                task.wait(0.2)
                 task.spawn(StartHub)
             else
                 WindUI:Notify({
