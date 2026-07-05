@@ -3,6 +3,17 @@ if game.PlaceId == 137233438285284 then
 
     local StaticKey = "PAKAN"
 
+    -- Initialize Globals Early
+    _G.AutoEggPasti = false
+    _G.AutoDeposit = false
+    _G.AutoBuyChicken = false
+    _G.AutoCollectCash = false
+    _G.AutoMergeChicken = false
+    _G.AutoUpgradeProcess = false
+    _G.AutoClaimGuild = false
+    _G.ChickenAmount = 1
+    _G.iHannsyAuthenticated = false
+
     local function StartHub()
         local Window = WindUI:CreateWindow({
             Title = "iHannsyHUB",
@@ -249,7 +260,7 @@ if game.PlaceId == 137233438285284 then
             end,
         })
 
-        -- Late Game Init (untuk memastikan UI muncul duluan)
+        -- Game Init
         task.spawn(function()
             local CollectRemote = game:GetService("ReplicatedStorage").Paper.Remotes.__remoteevent
             local FolderEggs = workspace:WaitForChild("Eggs")
@@ -269,15 +280,6 @@ if game.PlaceId == 137233438285284 then
             end
 
             local MergeRemote = GetNilRemote("__remotefunction", "1_18021")
-
-            _G.AutoEggPasti = false
-            _G.AutoDeposit = false
-            _G.AutoBuyChicken = false
-            _G.AutoCollectCash = false
-            _G.AutoMergeChicken = false
-            _G.AutoUpgradeProcess = false
-            _G.AutoClaimGuild = false
-            _G.ChickenAmount = 1
 
             -- Background Loops
             task.spawn(function()
@@ -365,6 +367,7 @@ if game.PlaceId == 137233438285284 then
         end)
     end
 
+    -- Key System Logic
     local KeyWindow = WindUI:CreateWindow({
         Title = "Key System | iHannsyHUB",
         Author = "iHannsy A.K.A MasPakan",
@@ -401,9 +404,8 @@ if game.PlaceId == 137233438285284 then
                     Content = "Welcome to iHannsyHUB!",
                     Duration = 3,
                 })
+                _G.iHannsyAuthenticated = true
                 KeyWindow:Destroy()
-                task.wait(0.2)
-                task.spawn(StartHub)
             else
                 WindUI:Notify({
                     Title = "Invalid Key",
@@ -428,6 +430,12 @@ if game.PlaceId == 137233438285284 then
             end
         end,
     })
+
+    -- Wait for Authentication in the Main Thread
+    repeat task.wait() until _G.iHannsyAuthenticated == true
+
+    task.wait(0.5) -- Stability delay
+    StartHub()
 else
     game:GetService("StarterGui"):SetCore("SendNotification", {
         Title = "iHannsyHUB",
