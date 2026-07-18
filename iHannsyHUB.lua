@@ -33,6 +33,38 @@ if game.PlaceId == 137233438285284 then
         },
     })
 
+    local FPSTag = Window:Tag({
+        Title = "0 FPS",
+        Color = Color3.fromHex("#00d4ff"),
+    })
+
+    local VersionTag = Window:Tag({
+        Title = "v0.1.1",
+        Icon = "github",
+        Color = Color3.fromHex("#00d4ff"),
+    })
+
+    local RunService = game:GetService("RunService")
+
+    local LastTime = tick()
+
+    local FrameCount = 0
+
+    task.spawn(function()
+        while true do
+            task.wait(1)
+            local CurrentTime = tick()
+            local FPS = math.round(FrameCount / (CurrentTime - LastTime))
+            FPSTag:SetTitle(FPS .. " FPS")
+            FrameCount = 0
+            LastTime = CurrentTime
+        end
+    end)
+
+    RunService.RenderStepped:Connect(function()
+        FrameCount = FrameCount + 1
+    end)
+
     local MainTab = Window:Tab({
         Title = "Main Automation",
         Icon = "play",
@@ -520,6 +552,38 @@ elseif game.PlaceId == 115681808123944 or game.GameId == 115681808123944 then
             Draggable = true,
         },
     })
+
+    local FPSTag = Window:Tag({
+        Title = "0 FPS",
+        Color = Color3.fromHex("#00d4ff"),
+    })
+
+    local VersionTag = Window:Tag({
+        Title = "v0.1.1",
+        Icon = "github",
+        Color = Color3.fromHex("#00d4ff"),
+    })
+
+    local RunService = game:GetService("RunService")
+
+    local LastTime = tick()
+
+    local FrameCount = 0
+
+    task.spawn(function()
+        while true do
+            task.wait(1)
+            local CurrentTime = tick()
+            local FPS = math.round(FrameCount / (CurrentTime - LastTime))
+            FPSTag:SetTitle(FPS .. " FPS")
+            FrameCount = 0
+            LastTime = CurrentTime
+        end
+    end)
+
+    RunService.RenderStepped:Connect(function()
+        FrameCount = FrameCount + 1
+    end)
 
     local MainTab = Window:Tab({
         Title = "Main Automation",
