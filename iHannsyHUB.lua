@@ -28,7 +28,7 @@ if game.PlaceId == 137233438285284 then
         },
         OpenButton = {
             Enabled = true,
-            Title = "Open iHannsyHUB",
+            Title = "iHannsyHUB",
             Draggable = true,
         },
     })
@@ -548,7 +548,7 @@ elseif game.PlaceId == 115681808123944 or game.GameId == 115681808123944 then
         },
         OpenButton = {
             Enabled = true,
-            Title = "Open iHannsyHUB",
+            Title = "iHannsyHUB",
             Draggable = true,
         },
     })
