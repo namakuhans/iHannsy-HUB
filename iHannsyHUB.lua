@@ -480,6 +480,393 @@ if game.PlaceId == 137233438285284 then
             end
         end)
     end)
+elseif game.PlaceId == 115681808123944 or game.GameId == 115681808123944 then
+    local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"))()
+
+    -- Initialize Globals
+    _G.SafeFarmActive = false
+    _G.AutoSellActive = false
+    _G.AutoValueActive = false
+    _G.AutoLuckActive = false
+    _G.WalkSpeedValue = 16
+    _G.JumpPowerValue = 50
+    _G.AntiAFK = false
+
+    local Window = WindUI:CreateWindow({
+        Title = "iHannsyHUB",
+        Author = "iHannsy A.K.A MasPakan",
+        Folder = "iHannsyHUB",
+        Icon = "rbxassetid://110043383622723",
+        Theme = "Sky",
+        KeySystem = {
+            Key = { "PAKAN" },
+            Note = "Join Discord for Key: discord.gg/8wM2tNhUdB",
+            URL = "https://discord.gg/8wM2tNhUdB",
+            SaveKey = false,
+        },
+        OpenButton = {
+            Enabled = true,
+            Title = "Open iHannsyHUB",
+            Draggable = true,
+        },
+    })
+
+    local MainTab = Window:Tab({
+        Title = "Main Automation",
+        Icon = "play",
+    })
+
+    local MiscTab = Window:Tab({
+        Title = "Misc",
+        Icon = "box",
+    })
+
+    local SettingsTab = Window:Tab({
+        Title = "Settings",
+        Icon = "settings",
+    })
+
+    local AboutTab = Window:Tab({
+        Title = "About",
+        Icon = "info",
+    })
+
+    -- Main Automation Elements
+    MainTab:Image({
+        Image = "rbxassetid://110043383622723",
+        AspectRatio = "1:1",
+        Radius = 9,
+    })
+
+    MainTab:Section({
+        Title = "General Automation",
+    })
+
+    MainTab:Toggle({
+        Title = "Auto Farm",
+        Value = _G.SafeFarmActive,
+        Flag = "AutoFarm",
+        Callback = function(v)
+            _G.SafeFarmActive = v
+            WindUI:Notify({
+                Title = "iHannsyHUB",
+                Content = v and "Auto Farm Dinyalakan" or "Auto Farm Dimatikan",
+                Duration = 2,
+            })
+        end,
+    })
+
+    MainTab:Toggle({
+        Title = "Auto Sell",
+        Value = _G.AutoSellActive,
+        Flag = "AutoSell",
+        Callback = function(v)
+            _G.AutoSellActive = v
+            WindUI:Notify({
+                Title = "iHannsyHUB",
+                Content = v and "Auto Sell Dinyalakan" or "Auto Sell Dimatikan",
+                Duration = 2,
+            })
+        end,
+    })
+
+    MainTab:Toggle({
+        Title = "Auto Upgrade Value",
+        Value = _G.AutoValueActive,
+        Flag = "AutoUpgradeValue",
+        Callback = function(v)
+            _G.AutoValueActive = v
+            WindUI:Notify({
+                Title = "iHannsyHUB",
+                Content = v and "Auto Upgrade Value Dinyalakan" or "Auto Upgrade Value Dimatikan",
+                Duration = 2,
+            })
+        end,
+    })
+
+    MainTab:Toggle({
+        Title = "Auto Upgrade Luck",
+        Value = _G.AutoLuckActive,
+        Flag = "AutoUpgradeLuck",
+        Callback = function(v)
+            _G.AutoLuckActive = v
+            WindUI:Notify({
+                Title = "iHannsyHUB",
+                Content = v and "Auto Upgrade Luck Dinyalakan" or "Auto Upgrade Luck Dimatikan",
+                Duration = 2,
+            })
+        end,
+    })
+
+    -- Misc Elements
+    MiscTab:Section({
+        Title = "Player Utilities",
+    })
+
+    MiscTab:Slider({
+        Title = "WalkSpeed",
+        Desc = "Ubah kecepatan jalan karakter",
+        Value = { Min = 16, Max = 200, Default = 16 },
+        Flag = "WalkSpeedSlider",
+        Callback = function(v)
+            _G.WalkSpeedValue = v
+            local char = game:GetService("Players").LocalPlayer.Character
+            if char and char:FindFirstChild("Humanoid") then
+                char.Humanoid.WalkSpeed = v
+            end
+        end,
+    })
+
+    MiscTab:Slider({
+        Title = "JumpPower",
+        Desc = "Ubah kekuatan lompatan karakter",
+        Value = { Min = 50, Max = 500, Default = 50 },
+        Flag = "JumpPowerSlider",
+        Callback = function(v)
+            _G.JumpPowerValue = v
+            local char = game:GetService("Players").LocalPlayer.Character
+            if char and char:FindFirstChild("Humanoid") then
+                char.Humanoid.UseJumpPower = true
+                char.Humanoid.JumpPower = v
+            end
+        end,
+    })
+
+    MiscTab:Toggle({
+        Title = "Anti-AFK",
+        Desc = "Mencegah diskoneksi otomatis",
+        Value = _G.AntiAFK,
+        Flag = "AntiAFK",
+        Callback = function(v)
+            _G.AntiAFK = v
+            WindUI:Notify({
+                Title = "iHannsyHUB",
+                Content = v and "Anti-AFK Dinyalakan" or "Anti-AFK Dimatikan",
+                Duration = 2,
+            })
+        end,
+    })
+
+    MiscTab:Section({
+        Title = "Server Management",
+    })
+
+    MiscTab:Button({
+        Title = "Rejoin Server",
+        Desc = "Masuk kembali ke server ini",
+        Icon = "refresh-cw",
+        Callback = function()
+            local ts = game:GetService("TeleportService")
+            local p = game:GetService("Players").LocalPlayer
+            ts:Teleport(game.PlaceId, p)
+        end,
+    })
+
+    MiscTab:Button({
+        Title = "Server Hop",
+        Desc = "Pindah ke server lain",
+        Icon = "external-link",
+        Callback = function()
+            local HttpService = game:GetService("HttpService")
+            local TeleportService = game:GetService("TeleportService")
+            local PlaceId = game.PlaceId
+            local Players = game:GetService("Players")
+
+            local function hop()
+                local servers = HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/" .. PlaceId .. "/servers/Public?sortOrder=Desc&limit=100")).data
+                for _, server in pairs(servers) do
+                    if server.playing < server.maxPlayers and server.id ~= game.JobId then
+                        TeleportService:TeleportToPlaceInstance(PlaceId, server.id, Players.LocalPlayer)
+                        break
+                    end
+                end
+            end
+            hop()
+        end,
+    })
+
+    -- Settings Management
+    SettingsTab:Section({
+        Title = "Config Management",
+    })
+
+    local ConfigManager = Window.ConfigManager
+    local ConfigName = "default"
+
+    SettingsTab:Input({
+        Title = "Nama Config",
+        Value = ConfigName,
+        Callback = function(v)
+            ConfigName = v
+        end,
+    })
+
+    SettingsTab:Button({
+        Title = "Simpan Config",
+        Justify = "Center",
+        Callback = function()
+            Window.CurrentConfig = ConfigManager:Config(ConfigName)
+            if Window.CurrentConfig:Save() then
+                WindUI:Notify({
+                    Title = "Config Tersimpan",
+                    Content = "Konfigurasi '" .. ConfigName .. "' berhasil disimpan",
+                    Duration = 3,
+                })
+            end
+        end,
+    })
+
+    SettingsTab:Button({
+        Title = "Muat Config",
+        Justify = "Center",
+        Callback = function()
+            Window.CurrentConfig = ConfigManager:CreateConfig(ConfigName)
+            if Window.CurrentConfig:Load() then
+                WindUI:Notify({
+                    Title = "Config Dimuat",
+                    Content = "Konfigurasi '" .. ConfigName .. "' berhasil dimuat",
+                    Duration = 3,
+                })
+            end
+        end,
+    })
+
+    -- About & Discord
+    AboutTab:Section({
+        Title = "Script Info",
+    })
+
+    AboutTab:Section({
+        Title = "Game Support: Throw a Coin",
+        TextSize = 18,
+    })
+
+    AboutTab:Section({
+        Title = "Other games coming soon...",
+        TextTransparency = 0.5,
+        TextSize = 14,
+    })
+
+    AboutTab:Section({
+        Title = "Discord Community",
+    })
+
+    AboutTab:Button({
+        Title = "Join Discord",
+        Desc = "Click to copy link: discord.gg/8wM2tNhUdB",
+        Icon = "link",
+        Callback = function()
+            if setclipboard then
+                setclipboard("https://discord.gg/8wM2tNhUdB")
+                WindUI:Notify({
+                    Title = "Discord iHannsyHUB",
+                    Content = "Link berhasil disalin!",
+                    Duration = 3,
+                })
+            else
+                WindUI:Notify({
+                    Title = "Discord iHannsyHUB",
+                    Content = "https://discord.gg/8wM2tNhUdB",
+                    Duration = 5,
+                })
+            end
+        end,
+    })
+
+    -- Game Logic Init (Background)
+    task.spawn(function()
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local LocalPlayer = game:GetService("Players").LocalPlayer
+        local VirtualUser = game:GetService("VirtualUser")
+
+        -- Non-blocking or deferred event finding to ensure fast load of UI
+        local Assets = ReplicatedStorage:WaitForChild("Assets")
+        local Events = Assets:WaitForChild("Events")
+        local CoinThrowEvent = Events:WaitForChild("CoinThrow")
+        local CoinLandedEvent = Events:WaitForChild("CoinLanded")
+        local SellAllEvent = Events:WaitForChild("SellAll")
+        local UpgradeEvent = Events:WaitForChild("RequestUpgrade")
+        local targetPosition = Vector3.new(-1168.9798583984, 0.72600001096725, -168.94018554688)
+
+        -- Anti-AFK Logic
+        LocalPlayer.Idled:Connect(function()
+            if _G.AntiAFK then
+                VirtualUser:CaptureController()
+                VirtualUser:ClickButton2(Vector2.new())
+            end
+        end)
+
+        -- Keep WalkSpeed/JumpPower persistent on respawn
+        LocalPlayer.CharacterAdded:Connect(function(char)
+            local hum = char:WaitForChild("Humanoid")
+            hum.WalkSpeed = _G.WalkSpeedValue
+            hum.UseJumpPower = true
+            hum.JumpPower = _G.JumpPowerValue
+        end)
+
+        -- Background Loops
+        -- Loop Auto Farm
+        task.spawn(function()
+            while true do
+                if _G.SafeFarmActive then
+                    pcall(function()
+                        CoinThrowEvent:FireServer("Fortune Coin", targetPosition)
+                    end)
+                    task.wait(0.2)
+                    if _G.SafeFarmActive then
+                        pcall(function()
+                            CoinLandedEvent:FireServer(2, targetPosition, "Fortune Coin", nil, nil)
+                        end)
+                    end
+                    task.wait(0.5)
+                else
+                    task.wait(0.5)
+                end
+            end
+        end)
+
+        -- Loop Auto Sell
+        task.spawn(function()
+            while true do
+                if _G.AutoSellActive then
+                    pcall(function()
+                        SellAllEvent:FireServer()
+                    end)
+                    task.wait(3.5)
+                else
+                    task.wait(0.5)
+                end
+            end
+        end)
+
+        -- Loop Auto Upgrade Value
+        task.spawn(function()
+            while true do
+                if _G.AutoValueActive then
+                    pcall(function()
+                        UpgradeEvent:FireServer("Value Multiplier")
+                    end)
+                    task.wait(1.5)
+                else
+                    task.wait(0.5)
+                end
+            end
+        end)
+
+        -- Loop Auto Upgrade Luck
+        task.spawn(function()
+            while true do
+                if _G.AutoLuckActive then
+                    pcall(function()
+                        UpgradeEvent:FireServer("Luck Multiplier")
+                    end)
+                    task.wait(1.5)
+                else
+                    task.wait(0.5)
+                end
+            end
+        end)
+    end)
 else
     game:GetService("StarterGui"):SetCore("SendNotification", {
         Title = "iHannsyHUB",
