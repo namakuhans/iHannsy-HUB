@@ -22,7 +22,7 @@ if game.PlaceId == 137233438285284 then
         Theme = "Sky",
         KeySystem = {
             Key = { "PAKAN" },
-            Note = "Join Discord for Key: discord.gg/8wM2tNhUdB",
+            Note = "Dapatkan key dengan bergabung ke Discord melalui tombol di bawah!",
             URL = "https://discord.gg/8wM2tNhUdB",
             SaveKey = false,
         },
@@ -321,8 +321,18 @@ if game.PlaceId == 137233438285284 then
     })
 
     AboutTab:Section({
-        Title = "Game Support: Chicken Farm!",
+        Title = "Supported Games:",
         TextSize = 18,
+    })
+
+    AboutTab:Section({
+        Title = "- Chicken Farm!",
+        TextSize = 14,
+    })
+
+    AboutTab:Section({
+        Title = "- Throw a Coin",
+        TextSize = 14,
     })
 
     AboutTab:Section({
@@ -500,7 +510,7 @@ elseif game.PlaceId == 115681808123944 or game.GameId == 115681808123944 then
         Theme = "Sky",
         KeySystem = {
             Key = { "PAKAN" },
-            Note = "Join Discord for Key: discord.gg/8wM2tNhUdB",
+            Note = "Dapatkan key dengan bergabung ke Discord melalui tombol di bawah!",
             URL = "https://discord.gg/8wM2tNhUdB",
             SaveKey = false,
         },
@@ -737,8 +747,18 @@ elseif game.PlaceId == 115681808123944 or game.GameId == 115681808123944 then
     })
 
     AboutTab:Section({
-        Title = "Game Support: Throw a Coin",
+        Title = "Supported Games:",
         TextSize = 18,
+    })
+
+    AboutTab:Section({
+        Title = "- Chicken Farm!",
+        TextSize = 14,
+    })
+
+    AboutTab:Section({
+        Title = "- Throw a Coin",
+        TextSize = 14,
     })
 
     AboutTab:Section({
